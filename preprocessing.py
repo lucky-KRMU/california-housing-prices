@@ -4,6 +4,7 @@ This is the python file which will be used to analyze the data.
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 
 data = pd.read_csv('data/housing.csv')
 
@@ -70,3 +71,20 @@ validation_data, test_data = train_test_split(temp_data,
 print(train_data.info())
 print(validation_data.info())
 print(test_data.info())
+
+# refining the data
+x_train = train_data.drop('total_bedrooms', axis=1)
+y_train = train_data['median_house_value']
+
+x_validation = validation_data.drop('total_bedrooms', axis=1)
+y_validation = validation_data['median_house_value']
+
+x_test = test_data.drop('total_bedrooms', axis=1)
+y_test = test_data['median_house_value']
+
+print(x_train.shape)
+print(y_train.shape)
+print(x_validation.shape)
+print(y_validation.shape)
+print(x_test.shape)
+print(y_test.shape)
