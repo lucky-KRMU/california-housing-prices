@@ -3,6 +3,7 @@ This is the python file which will be used to analyze the data.
 '''
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
 data = pd.read_csv('data/housing.csv')
 
@@ -35,3 +36,22 @@ plt.xlabel('Frequency')
 plt.ylabel('Values')
 
 plt.savefig('graphs/bedrooms_histogram.png')
+
+# splitting the data
+
+# train_data, temp_data = train_test_split(data, 
+#                                         test_size=.2,
+#                                         random_state=42,
+#                                         stratify=data['median_income'])
+
+# validation_data, test_data = train_test_split(temp_data,
+#                                               test_size=.5,
+#                                               random_state=42,
+#                                               stratify=data['median_income'])
+# # Since this is a large dataset, so stratification isn't required but we are still doing it as it's a good pracatice.
+
+# print(train_data.info())
+# print(validation_data.info())
+# print(test_data.info())
+
+# we can't do stratification here because stratification is done for categorical classes classification and not of simple continuous values.
