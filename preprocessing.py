@@ -55,3 +55,18 @@ plt.savefig('graphs/bedrooms_histogram.png')
 # print(test_data.info())
 
 # we can't do stratification here because stratification is done for categorical classes classification and not of simple continuous values.
+
+
+# splitting the data
+
+train_data, temp_data = train_test_split(data, 
+                                        test_size=.2,
+                                        random_state=42)
+
+validation_data, test_data = train_test_split(temp_data,
+                                              test_size=.5,
+                                              random_state=42)
+
+print(train_data.info())
+print(validation_data.info())
+print(test_data.info())
