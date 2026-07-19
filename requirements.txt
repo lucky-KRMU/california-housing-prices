@@ -2,3 +2,4 @@ tensorflow
 pandas
 kagglehub
 scikit-learn
+matplotlib
