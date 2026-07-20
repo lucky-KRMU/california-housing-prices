@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 data = pd.read_csv('data/housing.csv')
 
@@ -190,22 +190,52 @@ encoded_test = pd.DataFrame(
     index=x_test.index
 )
 
+# Normalizing the vlaues using Standardization
+scaler = StandardScaler()
+
+x_train_normalized = scaler.fit_transform(x_train_housing_tr)
+x_validation_normalized = scaler.transform(x_validation_housing_tr)
+x_test_normalized = scaler.transform(x_test_housing_tr)
+
+# converting standardized values to pandas dataframes
+x_train_normalized_pd = pd.DataFrame(
+    x_train_normalized,
+    columns=x_train_housing_tr.columns,
+    index=x_train_housing_tr.index
+)
+
+x_validation_normalized_pd = pd.DataFrame(
+    x_validation_normalized,
+    columns=x_validation_housing_tr.columns,
+    index=x_validation_housing_tr.index
+)
+
+x_test_normalized_pd = pd.DataFrame(
+    x_test_normalized,
+    columns=x_test_housing_tr.columns,
+    index=x_test_housing_tr.index
+)
+
+print('the type of standardized values are: ', type(x_train_normalized))
+print('the type of standardized values are: ', type(x_train_normalized_pd))
+
 # joining the two datasets together
 
 x_train_final = pd.concat(
-    [x_train_housing_tr, encoded_train],
+    [x_train_normalized_pd, encoded_train],
     axis=1 # to join along columns
 )
 
 x_validation_final = pd.concat(
-    [x_validation_housing_tr, encoded_validation],
+    [x_validation_normalized_pd, encoded_validation],
     axis=1
 )
 
 x_test_final = pd.concat(
-    [x_test_housing_tr, encoded_test],
+    [x_test_normalized_pd, encoded_test],
     axis=1
 )
 
 print("Final Data Info:\n")
 print(x_train_final.info())
+
