@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import LabelEncoder
 
 data = pd.read_csv('data/housing.csv')
 
@@ -73,13 +74,13 @@ print(validation_data.info())
 print(test_data.info())
 
 # refining the data
-x_train = train_data.drop('total_bedrooms', axis=1)
+x_train = train_data.drop('median_house_value', axis=1)
 y_train = train_data['median_house_value']
 
-x_validation = validation_data.drop('total_bedrooms', axis=1)
+x_validation = validation_data.drop('median_house_value', axis=1)
 y_validation = validation_data['median_house_value']
 
-x_test = test_data.drop('total_bedrooms', axis=1)
+x_test = test_data.drop('median_house_value', axis=1)
 y_test = test_data['median_house_value']
 
 print(x_train.shape)
