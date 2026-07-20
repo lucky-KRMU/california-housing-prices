@@ -139,6 +139,7 @@ print(x_train_housing_tr.isnull().sum())
 
 # applying One-Hot-encoding
 encoder = OneHotEncoder()
+# use sparse_output=False to take numpy array
 
 encoded = encoder.fit_transform(x_train_proximity)
 
@@ -150,3 +151,61 @@ encoded_test = encoder.transform(x_test_proximity)
 # sparse_matrix is set to True, because if we would store dense matrices where all the vlaues would be filled then it 
 # would take up much more space and it would be inefficient. That's why scikit learn only stores the position and 
 # activation. later we could convert these values back to numpy array or pandas dataframe
+# also in one hot encoder, it is named so because in the entire vector only one position is active or hot which is one (1), rest are zeroes
+
+# Printing the shape values for debugging purposes
+print(type(encoded))
+print(encoded)
+
+print(encoded.shape)
+print(len(x_train.index))
+print(len(x_train_proximity.index))
+# here in the above printed vlaues they may print the desired values, but since encoded is just a sparse matrix,
+# so it will be printing just the meta data and not the actual data. hence we must explicitly convert the values into numpy arrays
+
+# converting into numpy arrays
+encoded = encoded.toarray()
+encoded_validation = encoded_validation.toarray()
+encoded_test = encoded_test.toarray()
+print(type(encoded))
+print(encoded.shape)
+
+# Converting sparse matrices back to pandas dataframes
+
+encoded_train = pd.DataFrame(
+    encoded,
+    columns=encoder.get_feature_names_out(), # To get the column names
+    index=x_train.index
+)
+
+encoded_validation = pd.DataFrame(
+    encoded_validation,
+    columns=encoder.get_feature_names_out(), # To get the column names
+    index=x_validation.index
+)
+
+encoded_test = pd.DataFrame(
+    encoded_test,
+    columns=encoder.get_feature_names_out(), # To get the column names
+    index=x_test.index
+)
+
+# joining the two datasets together
+
+x_train_final = pd.concat(
+    [x_train_housing_tr, encoded_train],
+    axis=1 # to join along columns
+)
+
+x_validation_final = pd.concat(
+    [x_validation_housing_tr, encoded_validation],
+    axis=1
+)
+
+x_test_final = pd.concat(
+    [x_test_housing_tr, encoded_test],
+    axis=1
+)
+
+print("Final Data Info:\n")
+print(x_train_final.info())
