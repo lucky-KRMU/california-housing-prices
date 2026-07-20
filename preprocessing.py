@@ -88,3 +88,16 @@ print(x_validation.shape)
 print(y_validation.shape)
 print(x_test.shape)
 print(y_test.shape)
+
+
+
+# splitting the data appropriately for imputation and encoding
+x_train_housing = x_train.drop('ocean_proximity', axis=1)
+x_validation_housing = x_validation.drop('ocean_proximity', axis=1)
+x_test_housing = x_test.drop('ocean_proximity', axis=1)
+
+x_train_proximity = x_train[['ocean_proximity']] # We are using double brackets here just to make sure that 
+# x_train_proximity is dataframe instead of a series. since series are unidimensional and dataframes are two dimensional, 
+# as in unicoding it would expect two dimensional dataframe to perform that particular operation
+x_validation_proximity = x_validation[['ocean_proximity']]
+x_test_proximity = x_test[['ocean_proximity']]
