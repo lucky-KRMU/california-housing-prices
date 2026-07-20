@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 
 data = pd.read_csv('data/housing.csv')
 
@@ -136,3 +136,17 @@ x_test_housing_tr = pd.DataFrame(
 # verifying if the imputation was successful
 print("Null Data(Post Imputation): ")
 print(x_train_housing_tr.isnull().sum())
+
+# applying One-Hot-encoding
+encoder = OneHotEncoder()
+
+encoded = encoder.fit_transform(x_train_proximity)
+
+# Since we have already  
+encoded_validation = encoder.transform(x_validation_proximity)
+encoded_test = encoder.transform(x_test_proximity)
+
+# These encoded values would return sparce matrix datatype. actually by default in OneHotEncoder() the parameter 
+# sparse_matrix is set to True, because if we would store dense matrices where all the vlaues would be filled then it 
+# would take up much more space and it would be inefficient. That's why scikit learn only stores the position and 
+# activation. later we could convert these values back to numpy array or pandas dataframe
