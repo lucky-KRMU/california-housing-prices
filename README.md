@@ -124,5 +124,4 @@ jupyter notebook California_housing_rate_predictor.ipynb
 
 ---
 
-```
 Made with ❤️ by Lucky Pawar
