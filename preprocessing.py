@@ -101,3 +101,37 @@ x_train_proximity = x_train[['ocean_proximity']] # We are using double brackets 
 # as in unicoding it would expect two dimensional dataframe to perform that particular operation
 x_validation_proximity = x_validation[['ocean_proximity']]
 x_test_proximity = x_test[['ocean_proximity']]
+
+# applying imputation
+imputer = SimpleImputer(strategy='median')
+
+# teaching the imputer
+imputer.fit(x_train_housing)
+
+# updating the values
+x_train_housing_tr = imputer.transform(x_train_housing)
+x_validation_housing_tr = imputer.transform(x_validation_housing)
+x_test_housing_tr = imputer.transform(x_test_housing)
+
+# since imputer.transform() returns a numpy array, we will now explicitly convert it into dataframe.
+x_train_housing_tr = pd.DataFrame(
+    x_train_housing_tr,
+    columns=x_train_housing.columns,
+    index=x_train_housing.index
+)
+
+x_validation_housing_tr = pd.DataFrame(
+    x_validation_housing_tr,
+    columns=x_validation_housing.columns,
+    index=x_validation_housing.index
+)
+
+x_test_housing_tr = pd.DataFrame(
+    x_test_housing_tr,
+    columns=x_test_housing.columns,
+    index=x_test_housing.index
+)
+
+# verifying if the imputation was successful
+print("Null Data(Post Imputation): ")
+print(x_train_housing_tr.isnull().sum())
